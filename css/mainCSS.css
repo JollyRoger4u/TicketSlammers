@@ -1,0 +1,68 @@
+
+
+/**********************************************************************************************************************
+ ****                            General settings (preferences for general classes)                                ****
+ **********************************************************************************************************************/
+.menuClass a{
+    text-decoration: none;
+}
+.menuClass li{
+    list-style: none;
+}
+.menuClass{
+    padding-inline-start: 0px;
+    display: flex;
+}
+
+/**********************************************************************************************************************
+ ****                                           Header                                                             ****
+ **********************************************************************************************************************/
+ header{
+    display: flex;
+    flex-direction: column;
+    background-color: lightblue;
+    border: 2px double black;
+    }
+
+.headerText{
+        align-self: center;
+    }
+
+/**********************************************************************************************************************
+ ****                                       user menu                                                              ****
+ **********************************************************************************************************************/
+ .logInMenu{
+    align-self: flex-end;
+    background-color: pink;
+    font-size: 16px;
+}
+
+
+ /**********************************************************************************************************************
+ ****                                       nav menu                                                                ****
+ **********************************************************************************************************************/
+ 
+ header .mainNav{
+    align-self: center;
+    border: 2px solid white;
+}
+
+header .mainNav a{
+    display: block;
+    color: hotpink;
+    font-family: cursive;
+    font-size: 20px;
+    background: black;
+    padding: 10px 20px;
+    
+
+}
+
+header .mainNav li{
+    border-left: 2px solid gray;
+}
+header .mainNav li:first-child{
+    border-left: none;
+}
+
+

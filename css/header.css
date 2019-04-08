@@ -36,7 +36,14 @@
     background-color: pink;
     font-size: 16px;
 }
+.logInMenu li{
+    
+}
 
+.logInMenu a{
+    display: block;
+padding: 5px;
+}
 
  /**********************************************************************************************************************
  ****                                       nav menu                                                                ****

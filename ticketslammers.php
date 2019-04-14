@@ -1,8 +1,44 @@
 <!doctype html>
+<html lang="en">
 
-<?php include_once 'header.php'?>
+<?php require_once 'includes/includes.php' ?>
 
+<section class="mainShop">
+    stuff
+    stuff
+    stuff
+    stuff
+    stuff
 
+</section>
+
+<section class="shoppingCart">
+    <div class="shoppingCartHeader">
+        <h3 class="shoppingCartTitle">Shopping Cart</h3>
+        <p> name </p>
+        <p> price </p>
+        <p> quantity </p>
+    </div>
+    <div class="selectedItemWrap">
+        <img class="ticketImg" src="img\Voltaire.jpg" alt="Voltaire image">
+        <p class="ticketName">asaopaaa</p>
+        <p class="ticketPrice">$55</p>
+        <p class="ticketAmount">1</p>
+
+    </div>
+    <div class="selectedItemWrap">
+        <img class="ticketImg" src="img\sabaton.jpg" alt="Sabaton image">
+        <p class="ticketName">asaopaaa</p>
+        <p class="ticketPrice">$55</p>
+        <p class="ticketAmount">1</p>
+    </div>
+    <div class="selectedItemWrap">
+        <img class="ticketImg" src="img\placeholder.jpg" alt="Placeholder image">
+        <p class="ticketName">asaopaaa</p>
+        <p class="ticketPrice">$55</p>
+        <p class="ticketAmount">1</p>
+    </div>
+</section>
 <section>
     <h1>
         Todo:
@@ -15,6 +51,7 @@
 </section>
 
 
-  <script src="js/scripts.js"></script>
+<script src="js/mainpage.js"></script>
 </body>
+
 </html>

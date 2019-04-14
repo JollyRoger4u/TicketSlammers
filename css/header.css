@@ -1,5 +1,14 @@
 
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
+@import url("https://fonts.googleapis.com/css?family=Metal+Mania");
 
+@font-face {
+    font-family: "Booter - Zero Zero";
+    src: url("Fonts/Booter - Zero Zero.woff") format("woff"),
+         url("Fonts/Booter - Zero Zero.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
 /**********************************************************************************************************************
  ****                            General settings (preferences for general classes)                                ****
  **********************************************************************************************************************/
@@ -73,3 +82,38 @@ header .mainNav li:first-child{
 }
 
 
+
+.shoppingCartHeader{
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    margin: auto;
+}
+.selectedItemWrap {
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    background-color: pink;
+    margin: auto;
+
+}
+
+.ticketImg{
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    
+    
+}
+
+.ticketName{
+
+}
+.ticketPrice{
+
+}
+.ticketAmount{
+
+}

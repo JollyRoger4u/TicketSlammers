@@ -8,7 +8,4 @@ if (document.readyState == "loading") {
 
 
 function ready() {
-    alert("loaded")
 }
-
-alert("WTF")

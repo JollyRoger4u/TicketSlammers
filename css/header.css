@@ -4,8 +4,8 @@
 
 @font-face {
     font-family: "Booter - Zero Zero";
-    src: url("Fonts/Booter - Zero Zero.woff") format("woff"),
-         url("Fonts/Booter - Zero Zero.woff2") format("woff2");
+    src: url("../Fonts/Booter - Zero Zero.woff") format("woff"),
+         url("../Fonts/Booter - Zero Zero.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
 }
@@ -80,8 +80,91 @@ header .mainNav li{
 header .mainNav li:first-child{
     border-left: none;
 }
-
-
+/**********************************************************************************************************************
+ ****                                       main Page                                                              ****
+ **********************************************************************************************************************/
+.eventViewer{
+    width: 1024px;
+    display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: auto;
+    justify-items: center;
+	margin: auto;
+	background: grey;
+}
+.shopHeader{
+	background-color: purple;
+	color: white;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-family: "Metal Mania";
+	font-size: 48px;
+}
+.eventImg{
+	height: auto;
+	width: auto;
+	object-fit: contain;
+	grid-column-start:1;
+	grid-column-end:2;
+	grid-row-start:2;
+	grid-row-end:5;	
+	padding: 10px;
+}
+.eventName{
+	grid-column-start:1;
+	grid-column-end: 4;
+}
+.eventTime{
+	grid-column-start:5;
+	grid-column-end: 7;
+}
+.eventDesc{
+	grid-column-start: 2;
+	grid-column-end: 6;
+	grid-row-start: 2;
+	grid-row-end: 5;
+}
+.eventPriceLabel{
+	grid-column-start: 6;
+	grid-column-end: 7;
+	grid-row-start: 2;
+	width: 100%;
+	background-color: pink;
+	text-align: center;
+}
+.eventMaxTicketsLabel{
+	grid-column-start: 6;
+	grid-column-end: 7;
+	grid-row-start: 3;
+}
+.eventCurrentTicketsLabel{
+	grid-column-start: 6;
+	grid-column-end: 7;
+	grid-row-start: 4;
+}
+.eventPrice{
+	grid-column-start: 7;
+	grid-row-start: 2;
+}
+.eventMaxTickets{
+	grid-column-start: 7;
+	grid-row-start: 3;
+}
+.eventCurrentTickets{
+	grid-column-start: 7;
+	grid-row-start: 4;
+}
+.BuyBtn{
+	grid-column-start: 7;
+	grid-row-start: 5;
+	padding: 10px;
+	margin: 10px;
+}
+ /**********************************************************************************************************************
+ ****                                       shopping cart                                                           ****
+ **********************************************************************************************************************/
 
 .shoppingCartHeader{
     width: 500px;

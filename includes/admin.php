@@ -4,7 +4,6 @@
 <head>
 
 </head>
-<?php include_once "includes.php" ?>
 
 <body>
 	<div class="form-style-2">
@@ -28,7 +27,7 @@
 
 
 	<?php
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if (isset($_post['subBtn'])) {
 		$eventName = $_POST['eventName'];
 		$eventDate = $_POST['eventDate'];
 		$ticketPrice = $_POST['ticketPrice'];

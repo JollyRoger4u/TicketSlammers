@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-
-</head>
+<?php
+require_once 'includes.php';
+include_once 'header.php'
+?>
 
 <body>
 	<div class="form-style-2">
@@ -34,12 +34,9 @@
 		$newEventImg = $_POST['newEventImg'];
 		$eventDescription = $_POST['eventDescription'];
 		$eventMaxTickets = $_POST['eventMaxTickets'];
-
-		if (empty($eventName) || empty($eventDate) || empty($ticketPrice) || empty($newEventImg) || empty($eventDescription) || empty($eventMaxTickets)) { } else {
-
-			$wrTicket = new TicketHandler;
-			$wrTicket->writeEvent($eventName, $eventDate, $ticketPrice, $newEventImg, $eventDescription, $eventMaxTickets);
-		}
+		$wrTicket = new TicketHandler;
+		$wrTicket->writeEvent($eventName, $eventDate, $ticketPrice, $newEventImg, $eventDescription, $eventMaxTickets);
 	}
+
 
 	?>

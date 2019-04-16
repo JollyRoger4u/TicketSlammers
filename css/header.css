@@ -2,13 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
 @import url("https://fonts.googleapis.com/css?family=Metal+Mania");
 
-@font-face {
-    font-family: "Booter - Zero Zero";
-    src: url("../Fonts/Booter - Zero Zero.woff") format("woff"),
-         url("../Fonts/Booter - Zero Zero.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
-}
 /**********************************************************************************************************************
  ****                            General settings (preferences for general classes)                                ****
  **********************************************************************************************************************/
@@ -29,24 +22,35 @@
  header{
     display: flex;
     flex-direction: column;
-    background-color: lightblue;
+	background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(38, 6, 39));
+	color: white;
+	font-family: "roboto";
+	font-size: 1.5em;
     border: 2px double black;
     }
 
 .headerText{
-        align-self: center;
+		align-self: center;
+		text-align: center;
     }
-
+.headerImg{
+	width: 300px;
+	height: auto;
+	object-fit: cover;
+	position: absolute;
+	top: 20px;
+	left: 0px;
+}
 /**********************************************************************************************************************
  ****                                       user menu                                                              ****
  **********************************************************************************************************************/
  .logInMenu{
     align-self: flex-end;
-    background-color: pink;
-    font-size: 16px;
-}
-.logInMenu li{
-    
+	background-color: white;
+	color: black;
+	font-size: 18px;
+	padding: 7px;
+	border-radius:  50px 0 50px 0;
 }
 
 .logInMenu a{
@@ -63,17 +67,6 @@ padding: 5px;
     border: 2px solid white;
 }
 
-header .mainNav a{
-    display: block;
-    color: hotpink;
-    font-family: cursive;
-    font-size: 20px;
-    background: black;
-    padding: 10px 20px;
-    
-
-}
-
 header .mainNav li{
     border-left: 2px solid gray;
 }
@@ -81,28 +74,33 @@ header .mainNav li:first-child{
     border-left: none;
 }
 /**********************************************************************************************************************
- ****                                       main Page                                                              ****
+ ****                                       main Page - events                                                             ****
  **********************************************************************************************************************/
-.eventViewer{
+body{
+	background: darkmagenta;
+}
+
+ .eventViewer{
 	width: 1024px;
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
 	grid-template-rows: auto;
 	justify-items: center;
-	margin: auto;
-	background: grey;
+	margin:  40px auto;
+	background: rgba(0, 0, 0, 0.719);
+	color: white;
 	}
-	.shopHeader{
+.shopHeader{
 	background-color: purple;
 	color: white;
 	width: 100%;
-	height: 50px;
-	line-height: 50px;
+	height: 75px;
+	line-height: 75px;
 	text-align: center;
 	font-family: "Metal Mania";
-	font-size: 48px;
+	font-size: 64px;
 	}
-	.eventImg{
+.eventImg{
 		height: 300px;
 		max-width: 400px;
 	object-fit: contain;
@@ -112,52 +110,51 @@ header .mainNav li:first-child{
 	grid-row-end:3;
 	padding: 10px;
 	}
-	.eventName{
+.eventName{
 	grid-column-start:1;
 	grid-column-end: 4;
 	}
-	.eventTime{
+.eventTime{
 	grid-column-start:5;
 	grid-column-end: 7;
 	}
-	.eventDesc{
+.eventDesc{
 	grid-column-start: 2;
 	grid-column-end: 6;
 	grid-row-start: 2;
 	grid-row-end: 5;
 	}
-	.eventPriceLabel{
+.eventPriceLabel{
 	grid-column-start: 6;
 	grid-column-end: 7;
 	grid-row-start: 2;
 	width: 100%;
-	background-color: pink;
 	text-align: center;
 	}
-	.eventMaxTicketsLabel{
+.eventMaxTicketsLabel{
 	grid-column-start: 6;
 	grid-column-end: 7;
 	grid-row-start: 3;
 	}
 
-	.eventCurrentTicketsLabel{
+.eventCurrentTicketsLabel{
 	grid-column-start: 6;
 	grid-column-end: 7;
 	grid-row-start: 4;
 	}
-	.eventPrice{
+.eventPrice{
 	grid-column-start: 7;
 	grid-row-start: 2;
 	}
-	.eventMaxTickets{
+.eventMaxTickets{
 	grid-column-start: 7;
 	grid-row-start: 3;
 	}
-	.eventCurrentTickets{
+.eventCurrentTickets{
 	grid-column-start: 7;
 	grid-row-start: 4;
 	}
-	.BuyBtn{
+.BuyBtn{
 	grid-column-start: 7;
 	grid-row-start: 5;
 	padding: 10px;
@@ -168,40 +165,54 @@ header .mainNav li:first-child{
  **********************************************************************************************************************/
 
 .shoppingCartHeader{
-    width: 500px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    justify-items: center;
-    margin: auto;
+    width: 800px;
+    display: flex;
+	justify-content: space-evenly;
+	font-family: "metal mania";
+	margin: auto;
+	color: white;
+	background: purple;
 }
 .selectedItemWrap {
-    width: 500px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+	width: 800px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
     justify-items: center;
-    background-color: pink;
-    margin: auto;
-
+	background-color:black;                   /* as everyone knows black and red are the most metal */
+	color: red;
+	margin: auto;
+	padding: 10px;
 }
 
 .ticketImg{
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
 }
 
-.ticketName{
-
+.buyQuantity{
+    height: 34px;
+    width: 50px;
+    border-radius: 5px;
+    border: 1px solid #56CCF2;
+    background-color: #eee;
+    color: #333;
+    padding: 0;
+    text-align: center;
+    font-size: 1.2em;
+    margin-right: 25px;
 }
-.ticketPrice{
 
+footer{
+	height: 500px;
 }
-.ticketAmount{
-
+.destroyerOfTickets{
+	width: 100px;
+	height: 50px;
 }
-
  /**********************************************************************************************************************
- ****                                       Admin                                                           ****
+ ****                                       Admin - Code Stolen from the internet                                   ****
  **********************************************************************************************************************/
 
  .form-style-2{

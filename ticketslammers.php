@@ -1,20 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-
-	<title>TicketScammers</title>
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/header.css">
+	<link rel="stylesheet" href="css/login.css">
+</head>
+<?php
+session_start();
+require_once 'includes/includes.php';
+
+if (isset($_SESSION['sessionID']) && $_SESSION['sessionID'] != 999) { } else {
+	$_SESSION['sessionID'] = 999;
+	echo "welcome guest!";
+}
+?>
+<header>
+	<img class="headerImg" src="img/header.jpg">
+	<ul class="menuClass logInMenu">
+		<?php if ($_SESSION['sessionID'] == 999) { ?>
+			<li><a href="includes/login.php">Login</a></li>
+			<li><a href="includes/register.php">Register</a></li>
+		<?php } ?>
+		<?php if (isset($_SESSION['sessionID']) && $_SESSION['sessionID'] != 999) { ?>
+			<li><a href="includes/logout.php">Logout</a></li>
+			<li><a href="includes/ticketslammers.php">profile</a></li>
+			<li><a href="includes/ownedTickets.php">my tickets</a></li>
+			<?php if ($_SESSION['sessionID'] < 2) { ?>
+				<li><a href="includes/admin.php">Welcome Admin</a></li>
+			<?php } ?>
+		<?php } ?>
+
+	</ul>
+	<div class="headerText">
+		<h1>Welcome to Ticketslammers!</h1>
+		<h2>Your most trutworthy ticket retailer and reseller!</h2>
+		<h3>We provide you the key to unlock unlimited experiences!</h3>
+	</div>
+</header>
+<title>TicketScammers</title>
+
+
 
 </head>
-<?php require_once 'includes/includes.php';
-require_once 'includes/header.php';
 
 
-?>
+
 <section class="mainShop">
+
+
+	<!------  this part handles populating the main store from the database by calling      ---------- 
+ -------  on the handler located in classes.php and then using for each to go through   ----------
+ -------  all entries from the database. It can handle new events without problems.     ----------
+ -------  It is atm vulnerable to spam from an uncautious admin. Also incredibly clunky ---------->
 
 	<h2 class="shopHeader">Currently available events</h2>
 	<?php
@@ -39,7 +77,6 @@ require_once 'includes/header.php';
 		echo '<p class="eventCurrentTicketsLabel">Current tickets:</p>';
 		echo '<p class="eventCurrentTickets">991</p>';
 		echo '<button class="buyBtn">Buy a ticket now!</button>';
-		//</form>';
 		echo '</div>';
 		echo '</div>';
 	}
@@ -47,7 +84,9 @@ require_once 'includes/header.php';
 
 
 </section>
-
+<!--- This code just gives a very tiny blueprint for css to be glued on when JS sends over content	----
+ ---- Hopefully noone else will see this part of the message and I have managed to solve the 		----
+ ---- horrible looking CSS... Also remember to remove this message... yep..                         ---->
 
 <section class="shoppingCart">
 	<div class="shoppingCartHeader">
@@ -56,34 +95,11 @@ require_once 'includes/header.php';
 		<p> price </p>
 		<p> quantity </p>
 	</div>
-	<!--	<div class="selectedItemWrap">
-		<img class="ticketImg" src="img\Voltaire.jpg" alt="Voltaire image">
-		<p class="ticketName">asaopaaa</p>
-		<p class="ticketPrice">$55</p>
-		<p class="ticketAmount">1</p>
-	</div>
-	<div class="selectedItemWrap">
-		<img class="ticketImg" src="img\sabaton.jpg" alt="Sabaton image">
-		<p class="ticketName">asaopaaa</p>
-		<p class="ticketPrice">$55</p>
-		<p class="ticketAmount">1</p>
-	</div>
-	<div class="selectedItemWrap">
-		<img class="ticketImg" src="img\placeholder.jpg" alt="Placeholder image">
-		<p class="ticketName">asaopaaa</p>
-		<p class="ticketPrice">$55</p>
-		<p class="ticketAmount">1</p>
-	</div> -->
+	<div class="selectedItemWrap"></div>
 </section>
-<section>
-	<h1> Todo: </h1>
-	<ul>
-		<li>general design</li>
-		<li>database</li>
-		<li>functions</li>
-	</ul>
-</section>
+
 <script src="js/mainpage.js"></script>
+<footer>this is the footer</footer>
 </body>
 
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head> <?php include_once "includes.php" ?>
+
+<body>
+	<div class="container">
+		<form name="addEventForm" action="" method="post" id="addEventForm">
+			<label for="eventName">Name of event:</label>
+			<input type="text" class="eventInput" name="eventName" placeholder="Placeholderspalooza" required>
+			<label for="eventDate">date of event:</label>
+			<input type="text" class="eventDate" name="eventDate" placeholder="2019-12-24" required>
+			<label for="ticketPrice">Price per ticket:</label>
+			<input type="text" class="" name="ticketPrice" placeholder="$$$$$" required>
+			<label for="eventTickets">Number of tickets for the event:</label>
+			<input type="text" class="" name="ticketPrice" placeholder="25" required>
+			<label for="EventDescription"></label>
+			<textarea name="EventDescription" class="EventDesc" rows="20" cols="60"
+				placeholder="the fun place to be"></textarea>
+			<button type="submit" class="subBtn" name="submit" value="Submit" id="subBtn">Submit</button>
+		</form>
+		<!--
+		$(document).ready(function () {
+			$("#contact-form").on("submit", function (e) {
+				e.preventDefault();
+				if ($("#contact-form [name='your_name']").val() === '') {
+					$("#contact-form [name='your_name']").css("border", "1px solid red");
+				}
+				else if ($("#contact-form [name='your_email']").val() === '') {
+					$("#contact-form [name='your_email']").css("border", "1px solid red");
+				}
+				else {
+					$("#loading-img").css("display", "block");
+					var sendData = $(this).serialize();
+					$.ajax({
+						type: "POST",
+						url: "get_response.php",
+						data: sendData,
+						success: function (data) {
+							$("#loading-img").css("display", "none");
+							$(".response_msg").text(data);
+							$(".response_msg").slideDown().fadeOut(3000);
+							$("#contact-form").find("input[type=text], input[type=email], textarea").val("");
+						}
+					});
+				}
+			});
+			$("#contact-form input").blur(function () {
+				var checkValue = $(this).val();
+				if (checkValue != '') {
+					$(this).css("border", "1px solid #eeeeee");
+				}
+			});
+		});
+	</script> <?php 
+require_once("config.php");
+if((isset($_POST['your_name'])&& $_POST['your_name'] !='') && (isset($_POST['your_email'])&& $_POST['your_email'] !=''))
+{
+ require_once("contact_mail.php
+“);
+
+$yourName = $conn->real_escape_string($_POST['your_name']);
+$yourEmail = $conn->real_escape_string($_POST['your_email']);
+$yourPhone = $conn->real_escape_string($_POST['your_phone']);
+$comments = $conn->real_escape_string($_POST['comments']);
+$sql="INSERT INTO contact_form_info (name, email, phone, comments) VALUES ('".$yourName."','".$yourEmail."', '".$yourPhone."', '".$comments."')";
+if(!$result = $conn->query($sql)){
+die('There was an error running the query [' . $conn->error . ']');
+}
+else
+{
+echo "Thank you! We will contact you soon";
+}
+}
+else
+{
+echo "Please fill Name and Email";
+}
+?>
+</body>
+
+</html>-->

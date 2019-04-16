@@ -1,31 +1,46 @@
 <!doctype html>
 <html lang="en">
-<?php require_once 'includes/includes.php' ?>
 
+<head>
+	<meta charset="utf-8">
+
+	<title>TicketScammers</title>
+	<meta name="description" content="The HTML5 Herald">
+	<meta name="author" content="SitePoint">
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/header.css">
+
+</head>
+<?php require_once 'includes/includes.php';
+
+?>
 <section class="mainShop">
 	<h2 class="shopHeader">Currently available events</h2>
+	<?php
+	$ticketPopulate = new TicketHandler;
+	$ticketObject = $ticketPopulate->getAllTickets();
 
-	<div class="eventViewer">
-		<img class="eventImg" src="img/placeholder.jpg">
-		<h3 class="eventName">Placeholder Name</h3>
-		<h3 class="eventTime">2019-01-01</h3>
-		<p class="eventDesc">Placeholder Description.
-			Williamsburg pour-over banh mi direct trade retro scenester normcore mustache tote bag street art
-			Vice yr asymmetrical mumblecore shabby chic wayfarers Carles synth XOXO banjo forage authentic small batch
-			roof party craft beer gastropub semiotics chambray Truffaut single-origin coffee bespoke Intelligentsia tousled
-			narwhal sriracha letterpress Tonx Pitchfork cray ethical drinking vinegar stumptown cardigan keytar literally
-			squid Wes Anderson chia aesthetic Marfa Blue Bottle lomo mixtape Neutra salvia Austin keffiyeh gluten-free kogi readymade
-			typewriter</p>
-		<p class="eventPriceLabel">Price:</p>
-		<p class="eventPrice">$352</p>
-		<p class="eventMaxTicketsLabel">Maximum tickets:</p>
-		<p class="eventMaxTickets">1500</p>
-		<p class="eventCurrentTicketsLabel">Available tickets:</p>
-		<p class="eventCurrentTickets">991</p>
-		<button class="BuyBtn">Buy now!</button>
+	foreach ($ticketObject as $data) {
+		$tID = $data['ticketID'];
+		$tName = $data['ticketName'];
+		$tDsc = $data['ticketDsc'];
+		$tPrice = $data['ticketPrice'];
+		$tImg = $data['ticketImg'];
+		echo '<form class="eventViewer" method="post">';
+		echo '<img class="eventImg" src="img/' . $tImg . '">';
+		echo '<h3 class="eventName">' . $tName . '</h3>';
+		echo '<h3 class="eventTime">2019-01-01</h3>';
+		echo '<p class="eventDesc">' . $tDsc . '</p>';
+		echo '<p class="eventPriceLabel">Price:</p>';
+		echo '<p class="eventMaxTicketsLabel">Maximum tickets:</p>';
+		echo '<p class="eventMaxTickets">placeholder<p>';
+		echo '<p class="eventCurrentTicketsLabel">Current tickets:</p>';
+		echo '<p class="eventCurrentTickets">991</p>';
+		echo '<button class="BuyBtn">Buy a ticket now!</button></form>';
+	}
+	?>
 
-	</div>
-	stuff stuff stuff stuff
 
 </section>
 

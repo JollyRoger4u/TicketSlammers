@@ -5,6 +5,7 @@ require_once 'classes.php';
 require_once 'constants.php';
 
 require_once 'header.php';
+require_once 'admin.php';
 
 
 ?>

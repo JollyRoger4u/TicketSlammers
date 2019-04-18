@@ -34,21 +34,27 @@
 				</li>
 				<label for="yeahYeah">I understand that my data will be stored with ticketslammers and I agree with this</label>
 				<input type="checkbox" name="yeahYeah" required>
+
+				<?php
+				try {
+					if (isset($_POST['registerBtn'])) {
+						$emailReg = $_POST['emailReg'];
+						$passwordReg = $_POST['passwordReg'];
+						$passwordReg2 = $_POST['passwordReg2'];
+						$firstNameReg = $_POST['firstNameReg'];
+						$lastNameReg = $_POST['lastNameReg'];
+						if ($passwordReg == $passwordReg2) {
+							$userReg = new User;
+							$userReg->newUser($emailReg, $passwordReg, $firstNameReg, $lastNameReg);
+						} else {
+							echo "password mismatch, please try harder";
+						}
+					}
+				} catch (Exception $e) {
+					echo 'Exception -> ';
+					var_dump($e->getMessage());
+				}
+
+				?>
 		</form>
 	</section>
-	<?php
-	if (isset($_POST['registerBtn'])) {
-		$emailReg = $_POST['emailReg'];
-		$passwordReg = $_POST['passwordReg'];
-		$passwordReg2 = $_POST['passwordReg2'];
-		$firstNameReg = $_POST['firstNameReg'];
-		$lastNameReg = $_POST['lastNameReg'];
-		if ($passwordReg == $passwordReg2) {
-			$userReg = new User;
-			$userReg->newUser($emailReg, $passwordReg, $firstNameReg, $lastNameReg);
-		} else {
-			echo "password mismatch, please try harder";
-		}
-	}
-
-	?>

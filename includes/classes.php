@@ -56,30 +56,42 @@ class TicketHandler     //Handles all calls that has to do with tickets and even
 		$evImg = $newEventImg;
 		$evDesc = $eventDescription;
 		$evMaxT = $eventMaxTickets;
-		$sql = "INSERT INTO events (eventName, eventDsc, ticketPrice, eventImg, maxTickets, eventDate)
+		try {
+			$sql = "INSERT INTO events (eventName, eventDsc, ticketPrice, eventImg, maxTickets, eventDate)
 		VALUES (:eventName, :eventDsc, :ticketPrice, :eventImg, :maxTickets, :eventDate)";
-		$stmt = $this->db->prepare($sql);
-		$stmt->execute([
-			'eventName' => $evName,
-			'eventDsc' => $evDesc,
-			'ticketPrice' => $evTicPr,
-			'eventImg' => $evImg,
-			'maxTickets' => $evMaxT,
-			'eventDate' => $evDat
-		]);
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute([
+				'eventName' => $evName,
+				'eventDsc' => $evDesc,
+				'ticketPrice' => $evTicPr,
+				'eventImg' => $evImg,
+				'maxTickets' => $evMaxT,
+				'eventDate' => $evDat
+			]);
+		} catch (Exception $e) {
+			echo 'Exception -> ';
+			var_dump($e->getMessage());
+		}
 	}
-	public function writeTicket($eventID)
+	public function writeTicket($eID)
 	{
+
+		$eventID = $eID;
 		$tickSerial = uniqid();
 		$tickHash = password_hash($tickSerial, PASSWORD_DEFAULT);
-		$sql = "INSERT INTO tickets (eventID, tickSerial, tickHash)
+		try {
+			$sql = "INSERT INTO tickets (eventID, tickSerial, tickHash)
 		VALUES (:eventID, :tickSerial, :tickHash)";
-		$stmt = $this->db->prepare($sql);
-		$stmt->execute([
-			'eventID' => $eventID,
-			'tickSerial' => $tickSerial,
-			'tickHash' => $tickHash
-		]);
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute([
+				'eventID' => $eventID,
+				'tickSerial' => $tickSerial,
+				'tickHash' => $tickHash
+			]);
+		} catch (Exception $e) {
+			echo 'Exception -> ';
+			var_dump($e->getMessage());
+		}
 	}
 }
 
@@ -127,15 +139,20 @@ class User                               //Handles all Database interaction with
 		$userHash = password_hash($userpass, PASSWORD_DEFAULT);
 		$userF = $userFName;
 		$userL = $userLName;
-		$sql = "INSERT INTO users (email, firstName, lastName, userPassword, hash)
-		VALUES (:email, :firstName, :lastName, :userPassword, :hash)";
-		$stmt = $this->db->prepare($sql);
-		$stmt->execute([
-			'email' => $userm,
-			'firstName' => $userF,
-			'lastName' => $userL,
-			'userPassword' => $userp,
-			'hash' => $userHash
-		]);
+		try {
+			$sql = "INSERT INTO users (email, firstName, lastName, userPassword, userHash)
+		VALUES (:email, :firstName, :lastName, :userPassword, :userHash)";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute([
+				'email' => $userm,
+				'firstName' => $userF,
+				'lastName' => $userL,
+				'userPassword' => $userp,
+				'userHash' => $userHash
+			]);
+		} catch (Exception $e) {
+			echo 'Exception -> ';
+			var_dump($e->getMessage());
+		}
 	}
 }

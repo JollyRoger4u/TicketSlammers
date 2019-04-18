@@ -77,9 +77,38 @@ if (isset($_SESSION['sessionID']) && $_SESSION['sessionID'] != 999) { } else {
 		echo '<p class="eventCurrentTicketsLabel">Current tickets:</p>';
 		echo '<p class="eventCurrentTickets">991</p>';
 		echo '<button class="buyBtn">Buy a ticket now!</button>';
+
+		if ($_SESSION['sessionID'] == 1){
+			$buttonID = $tID;
+			echo '<button name="createTicket" type="submit" value="' . $buttonID . '">
+			Create a ticket for this event
+			</button>';			
+			SpecTicket($buttonID);
+			echo "button id: " . $buttonID;
+		}
 		echo '</div>';
 		echo '</div>';
+
+		
+
 	}
+
+function SpecTicket($buttID){
+	try {
+		if (isset($_POST['createTicket'])) {
+			$buttonID = $buttID;
+			echo $buttonID;
+			$wrTicket = new TicketHandler;
+			$wrTicket->writeTicket($buttonID);
+			echo "Ticket created for event " . $buttonID;
+		}
+	} catch (Exception $e) {
+		echo 'Exception -> ';
+
+		var_dump($e->getMessage());
+	
+	}
+}
 	?>
 
 

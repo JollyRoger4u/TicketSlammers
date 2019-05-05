@@ -2,49 +2,15 @@
 <html lang="en">
 
 <head>
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/header.css">
-	<link rel="stylesheet" href="css/login.css">
+	<title>TicketScammers</title>
 </head>
 <?php
-session_start();
-require_once 'includes/includes.php';
+$path = $_SERVER['DOCUMENT_ROOT'];
+$path .= "/ticketslammers/includes/includes.php";
+include_once($path);
 
-if (isset($_SESSION['sessionID']) && $_SESSION['sessionID'] != 999) { } else {
-	$_SESSION['sessionID'] = 999;
-	echo "welcome guest!";
-}
+$currentUserRole = 0;
 ?>
-<header>
-	<img class="headerImg" src="img/header.jpg">
-	<ul class="menuClass logInMenu">
-		<?php if ($_SESSION['sessionID'] == 999) { ?>
-			<li><a href="includes/login.php">Login</a></li>
-			<li><a href="includes/register.php">Register</a></li>
-		<?php } ?>
-		<?php if (isset($_SESSION['sessionID']) && $_SESSION['sessionID'] != 999) { ?>
-			<li><a href="includes/logout.php">Logout</a></li>
-			<li><a href="includes/ticketslammers.php">profile</a></li>
-			<li><a href="includes/ownedTickets.php">my tickets</a></li>
-			<?php if ($_SESSION['sessionID'] < 2) { ?>
-				<li><a href="includes/admin.php">Welcome Admin</a></li>
-			<?php } ?>
-		<?php } ?>
-
-	</ul>
-	<div class="headerText">
-		<h1>Welcome to Ticketslammers!</h1>
-		<h2>Your most trutworthy ticket retailer and reseller!</h2>
-		<h3>We provide you the key to unlock unlimited experiences!</h3>
-	</div>
-</header>
-<title>TicketScammers</title>
-
-
-
-</head>
-
-
 
 <section class="mainShop">
 
@@ -77,45 +43,44 @@ if (isset($_SESSION['sessionID']) && $_SESSION['sessionID'] != 999) { } else {
 		echo '<p class="eventCurrentTicketsLabel">Current tickets:</p>';
 		echo '<p class="eventCurrentTickets">991</p>';
 		echo '<button class="buyBtn">Buy a ticket now!</button>';
+	}
+	/**********  made obsolete by admin page               */
 
-		if ($_SESSION['sessionID'] == 1){
+	/*if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 'Admin') {
 			$buttonID = $tID;
 			echo '<button name="createTicket" type="submit" value="' . $buttonID . '">
 			Create a ticket for this event
-			</button>';			
+			</button>';
 			SpecTicket($buttonID);
 			echo "button id: " . $buttonID;
 		}
 		echo '</div>';
 		echo '</div>';
-
-		
-
 	}
 
-function SpecTicket($buttID){
-	try {
-		if (isset($_POST['createTicket'])) {
-			$buttonID = $buttID;
-			echo $buttonID;
-			$wrTicket = new TicketHandler;
-			$wrTicket->writeTicket($buttonID);
-			echo "Ticket created for event " . $buttonID;
+	function SpecTicket($buttID)
+	{
+		try {
+			if (isset($_POST['createTicket'])) {
+				$buttonID = $buttID;
+				echo $buttonID;
+				$wrTicket = new TicketHandler;
+				$wrTicket->writeTicket($buttonID);
+				echo "Ticket created for event " . $buttonID;
+			}
+		} catch (Exception $e) {
+			echo 'Exception -> ';
+
+			var_dump($e->getMessage());
 		}
-	} catch (Exception $e) {
-		echo 'Exception -> ';
-
-		var_dump($e->getMessage());
-	
-	}
-}
+	}*/
 	?>
 
 
 </section>
 <!--- This code just gives a very tiny blueprint for css to be glued on when JS sends over content	----
- ---- Hopefully noone else will see this part of the message and I have managed to solve the 		----
- ---- horrible looking CSS... Also remember to remove this message... yep..                         ---->
+ 		---- Hopefully noone else will see this part of the message and I have managed to solve the 		----
+ 		---- horrible looking CSS... Also remember to remove this message... yep..                         ---->
 
 <section class="shoppingCart">
 	<div class="shoppingCartHeader">
@@ -124,7 +89,15 @@ function SpecTicket($buttID){
 		<p> price </p>
 		<p> quantity </p>
 	</div>
-	<div class="selectedItemWrap"></div>
+	<div id="shoppingCartWrap"></div>
+	<div class="shoppingCartHeader">
+		<p>total no. items: </p>
+		<p class="totalItems">0</p>
+		<p>total cost: </p>
+		<p class="totalCost">0</p>
+		<button class="buyBtnFinal">Purchase</button>
+	</div>
+
 </section>
 
 <script src="js/mainpage.js"></script>

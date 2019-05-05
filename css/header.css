@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
+/*@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');*/
 @import url("https://fonts.googleapis.com/css?family=Metal+Mania");
 
 /**********************************************************************************************************************
@@ -40,6 +40,12 @@
 	position: absolute;
 	top: 20px;
 	left: 0px;
+}
+#cookieWarning{
+	text-align:center; 
+	color: white;
+	margin: 5%;
+	background-color: darkgray;
 }
 /**********************************************************************************************************************
  ****                                       user menu                                                              ****
@@ -211,10 +217,65 @@ footer{
 	width: 100px;
 	height: 50px;
 }
+
  /**********************************************************************************************************************
- ****                                       Admin - Code Stolen from the internet                                   ****
+ ****                                       Register                                                                ****
+ **********************************************************************************************************************/
+#thankYou{
+	flex-direction: column;
+	background-color: black;
+	color: white;
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+#thankYou img{
+	width: 500px;
+	height: auto;
+	margin: auto;
+	object-fit: contain;
+}
+ /**********************************************************************************************************************
+ ****                                       Logout                                                                  ****
  **********************************************************************************************************************/
 
+ #logoutSection{
+	 display: flex;
+	flex-direction: column;
+	background-color: black;
+	color: white;
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+#logoutSection img{
+	width: 500px;
+	height: auto;
+	margin: auto;
+	object-fit: contain;
+}
+
+ /**********************************************************************************************************************
+ ****                                       Admin - Code (partly) Stolen from the internet                                   ****
+ **********************************************************************************************************************/
+ .eventImgThumb{
+	 width: 150px;
+	 height: 150px;
+	 object-fit: cover;
+	 float: left;
+ }
+ #createTicket{
+	 position: absolute;
+	 right: 10%;
+ }
+
+ .adminEventWrap{
+	 background-color: black;
+	 color: white;
+	 font-size: 18px;
+	 overflow: auto;
+	 
+ }
  .form-style-2{
 	max-width: 500px;
 	padding: 20px 12px 10px 20px;

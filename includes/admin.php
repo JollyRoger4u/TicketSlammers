@@ -6,21 +6,37 @@ include_once 'header.php'
 ?>
 
 <body>
-	<h2 class="adminPanelHeader">Welcome Admin, would you like to play a game?</h2>
+	<h2 class="adminPanelHeader">Welcome Admin</h2>
 	<h2 class="shopHeader">Currently available events</h2>
 	<?php
-	echo '<form class="eventWrapper" method="POST">';
-	echo '<div class="eventViewer">';
-	echo "<p>Create a ticket <br></p>";
-	echo "for event: ";
-	echo '<input type="text" name="id"></input>';
-	echo '<button type="submit" name="createTicket">Create Ticket</button>';
+	$handler = new TicketHandler();
+	$eventList = $handler->getAllEvents();
 
+	foreach ($eventList as $data) {
+		$tID = $data['eventID'];
+		$tName = $data['eventName'];
+		$tDsc = $data['eventDsc'];
+		$tPrice = $data['ticketPrice'];
+		$tImg = $data['eventImg'];
+		echo '<section class="adminEventWrap">';
+		echo '<img class="eventImgThumb" src="../img/' . $tImg . '">';
+		echo '<span class="eventName">' . $tName . '</span>';
+		echo '<span class="eventTime">2019-01-01</span></br>';
+		echo '<span class="eventPriceLabel">Price:</span>';
+		echo '<span class="eventPrice">' . $tPrice . '</span></br>';
+		echo '<span class="eventMaxTicketsLabel">Maximum tickets:</span>';
+		echo '<span class="eventMaxTickets">placeholder<span></br>';
+		echo '<span class="eventCurrentTicketsLabel">Current tickets:</span>';
+		echo '<span class="eventCurrentTickets">991</span></br>';
+		echo '<span class="eventID">Event ID: ' . $tID . '</span>';
+		echo '<button type="POST" id="createTicket" name="createTicket">Create Ticket</button></br>';
+		echo '</section>';
+	}
 	if (isset($_POST['createTicket'])) {
+		alert('woot');
 		$eventID = $_POST['id'];
-		echo $eventID;
 		$wrTicket = new TicketHandler;
-		$wrTicket->writeTicket(1);
+		$wrTicket->writeTicket($eventID);
 	}
 	echo "</div>";
 	echo "</form>";
@@ -28,7 +44,7 @@ include_once 'header.php'
 
 	?>
 	<div class="form-style-2">
-		<div class="form-style-2-heading">Event Information</div>
+		<h2>Create a new Event</h2>
 		<form class="form-style-2" name="addNewEventForm" method="post" id="addEventForm">
 			<label class=".form-style-2 label" for="eventName">Name of event:</label>
 			<input type="text" class="eventInput" name="eventName" placeholder="Placeholderspalooza" required>
@@ -46,12 +62,12 @@ include_once 'header.php'
 			<?php
 			try {
 				if (isset($_POST['eventSubmit'])) {
-					$eventName = $_POST['eventName'];
-					$eventDate = $_POST['eventDate'];
-					$ticketPrice = $_POST['ticketPrice'];
-					$newEventImg = $_POST['newEventImg'];
-					$eventDescription = $_POST['eventDescription'];
-					$eventMaxTickets = $_POST['eventMaxTickets'];
+					$eventName = trim(htmlspecialchars($_POST['eventName']));
+					$eventDate = trim(htmlspecialchars($_POST['eventDate']));
+					$ticketPrice = trim(htmlspecialchars($_POST['ticketPrice']));
+					$newEventImg = trim(htmlspecialchars($_POST['newEventImg']));
+					$eventDescription = trim(htmlspecialchars($_POST['eventDescription']));
+					$eventMaxTickets = trim(htmlspecialchars($_POST['eventMaxTickets']));
 					$wrTicket = new TicketHandler;
 					$wrTicket->writeEvent($eventName, $eventDate, $ticketPrice, $newEventImg, $eventDescription, $eventMaxTickets);
 				}

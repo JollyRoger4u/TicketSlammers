@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<link rel="stylesheet" href="../css/normalize.css">
-	<link rel="stylesheet" href="../css/header.css">
-	<link rel="stylesheet" href="../css/login.css">
 </head>
 <?php
-include_once 'header.php';
 require_once 'includes.php';
 
 if (isset($_POST['loginBtn'])) {
 	$userName = $_POST['userName'];
 	$userPass = $_POST['password'];
 	$user = new User();
-	$user->UserLogin($userName, $userPass);
-	header('Location:../ticketslammers.php');
+	$loggedIn = $user->UserLogin($userName, $userPass);
+	if ($loggedIn == false) {
+		echo "<h1>LOGGED IN, GOOD BOY!</h1>";
+	}
 }
 
-
 ?>
+
+
 <section id="logInSection">
-	<form method="post" action="login.php">
+	<form method="post">
+		<!--action="login.php">-->
 		<ul class="wrapper">
 			<li class="form-row">
 				<label for="userName">Username:</label>
@@ -36,3 +37,4 @@ if (isset($_POST['loginBtn'])) {
 		</ul>
 	</form>
 </section>
+<script src="../js/login.js"></script>

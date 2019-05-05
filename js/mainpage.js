@@ -1,71 +1,149 @@
+
 if (document.readyState == "loading") {
 	document.addEventListener('DOMContentLoaded', ready)
 } else {
-	ready()
-}
+	ready();
 
+}
+let emptyCart = true;
+let shopObject = {};
+let uniqueCartItem = document.getElementsByClassName('selectedItemWrap');
+let shoppingCart = document.getElementById('shoppingCartWrap');
+let storedData
 function ready() {
 
-	/****     Listens for clicks on any of the "buyBtns" */
 
-	var buybuttons = document.getElementsByClassName('buyBtn')
-	console.log(buybuttons)
-	for (var i = 0; i < buybuttons.length; i++) {
-		var button = buybuttons[i]
-		button.addEventListener('click', addItem)
+	/****     Listens for clicks on any of the add-to-cart buttons "buyBtns" */
+	cookieSeen();
+	let buybuttons = document.getElementsByClassName('buyBtn');
+	for (let i = 0; i < buybuttons.length; i++) {
+		let button = buybuttons[i];
+		button.addEventListener('click', addItem);
 	}
 
-	/*****     Grabs data from the event and gives it to "newCartItem" to make a shopping cart item */
+	/***** 		Listens for clicks on the main purchase button */
+	let purchase = document.getElementsByClassName('buyBtnFinal')[0];
+	purchase.addEventListener('click', purchaseClick);
+	function purchaseClick(event) {
+		if (!emptyCart) {
+			alert('PURCHASE REGISTERED');
+			createCookie();
 
-	function addItem(event) {
-		var button = event.target
-		var shopItem = button.parentElement.parentElement
-		var title = shopItem.getElementsByClassName('eventName')[0].innerText
-		var price = shopItem.getElementsByClassName('eventPrice')[0].innerText
-		var image = shopItem.getElementsByClassName('eventImg')[0].src
-		newCartItem(title, price, image)
-	}
-
-
-	/*****    Adds the passed in data to HTML and puts it in the shopping cart   */
-	function newCartItem(title, price, image) {
-		var cartRow = document.createElement('div')
-		var shoppingCartPlacement = document.getElementsByClassName('selectedItemWrap')[0]
-		var doublechk = shoppingCartPlacement.getElementsByClassName('ticketName')
-		for (var i = 0; i < doublechk.length; i++) {
-			if (doublechk[i].innerText == title) {
-				alert('already in the cart, dufus!')
-				return
-			}
 		}
-		var shoppingCartContents = `<div class="selectedItemWrap">
-		<img class="ticketImg" src="${image}">
-		<p class="ticketName">${title}</p>
-		<p class="ticketPrice">${price}</p>
-		<input class="buyQuantity" type="number">
-		<button class="destroyerOfTickets">Remove ticket</button>           
-		</div>`
-		cartRow.innerHTML = shoppingCartContents
-		shoppingCartPlacement.append(cartRow)
-		activateDestroy()
+
 	}
+}
 
-
-	/***      Listens for clicks on any of the destroyer buttons */
-	function activateDestroy() {
-		var destroyBtn = document.getElementsByClassName('destroyerOfTickets')
-		console.log(destroyBtn)
-		for (var i = 0; i < destroyBtn.length; i++) {
-			var button = destroyBtn[i]
-			button.addEventListener('click', function (event) {
-				var destroy = event.target
-				destroy.parentElement.parentElement.remove()
-
-			})
+function cookieSeen() {
+	let buttonExists = document.getElementById('okToCookiesBtn');
+	if (buttonExists != null) {
+		getRidOfWarning = document.getElementById('okToCookiesBtn');
+		getRidOfWarning.addEventListener('click', setSeenCookie);
+		function setSeenCookie() {
+			document.cookie = 'cookiesAccepted="yes"; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/;';
+			document.location.reload(true)
 		}
 	}
+}
 
 
 
+function getCookie() {
+	let cartCookie = document.cookie.split("=");
 
+	let cartObject = JSON.parse(cartCookie[1]);
+	console.log(cartCookie);
+	alert(cartCookie.nr);
+
+}
+
+function createCookie(shopObject) {
+
+	let days = 7;
+	let date = new Date();
+	let jsonCookie = JSON.stringify(shopObject);
+	date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	document.cookie = "shopCookie=" + jsonCookie;
+
+}
+
+/**** handles clicks on the shopping cart items and calls on the required function */
+function clickEvent(e) {
+	if (event.target.classList.contains('buyQuantity')) {
+
+		itemTotals();
+	} else if (event.target.classList.contains('destroyerOfTickets')) {
+		let destroy = event.target;
+		destroy.parentElement.parentElement.remove();
+		itemTotals();
+	}
+	else { console.log("johnny noButton") }
+}
+
+function itemTotals() {
+	let totalItem = 0;
+	let totalCost = 0;
+	singleCartItem = document.getElementsByClassName('selectedItemWrap');
+	for (let i = 0; i < singleCartItem.length; i++) {
+		let specificItemCost = singleCartItem[i].getElementsByClassName('ticketPrice')[0];
+		let specificItemAmount = singleCartItem[i].getElementsByClassName('buyQuantity')[0];
+		let specificEventName = singleCartItem[i].getElementsByClassName('ticketName')[0].innerText;
+		tempTotal = parseInt(specificItemAmount.value) * parseFloat(specificItemCost.innerText);
+		tempItems = parseInt(specificItemAmount.value);
+		//shopObject.name = specificEventName;
+		//shopObject.nr = specificItemAmount.value;
+
+		//console.log(shopObject)
+		totalCost += tempTotal;
+		totalItem += tempItems;
+
+	};
+	createCookie();   //shopObject
+	getCookie()
+	document.getElementsByClassName('totalItems')[0].innerText = totalItem;
+	document.getElementsByClassName('totalCost')[0].innerText = totalCost;
+	if (totalItem > 0) {
+		emptyCart = false;
+	}
+
+}
+
+function activateButtons() {
+	for (let i = 0; i < uniqueCartItem.length; i++) {
+		uniqueCartItem[i].addEventListener('click', clickEvent);
+	}
+}
+
+/*****     Grabs data from the event and gives it to "newCartItem" to make a shopping cart item */
+function addItem(event) {
+	let button = event.target
+	let shopItem = button.parentElement.parentElement
+	let title = shopItem.getElementsByClassName('eventName')[0].innerText;
+	let price = shopItem.getElementsByClassName('eventPrice')[0].innerText;
+	let image = shopItem.getElementsByClassName('eventImg')[0].src;
+	newCartItem(title, price, image);
+}
+function newCartItem(title, price, image) {
+	//let cookie = getCookie;
+	let cartRow = document.createElement('div');
+	let doublechk = shoppingCart.getElementsByClassName('ticketName');
+	for (let i = 0; i < doublechk.length; i++) {
+		if (doublechk[i].innerText == title) {
+			alert('already in the cart');
+			return
+		}
+	}
+	/***  Creates the UI representation of the ticket in the cart with information from the addItems function */
+
+	let shoppingCartContents = `<div class="selectedItemWrap">
+	<img class="ticketImg" src="${image}">
+	<p class="ticketName">${title}</p>
+	<p class="ticketPrice">${price}</p>
+	<input class="buyQuantity" type="number" value="1">
+	<button class="destroyerOfTickets">Remove ticket</button>           
+	</div>`
+	cartRow.innerHTML = shoppingCartContents
+	shoppingCart.append(cartRow);
+	activateButtons();
+	itemTotals();
 }

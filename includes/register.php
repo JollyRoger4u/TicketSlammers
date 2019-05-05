@@ -81,3 +81,4 @@
 			?>
 		</form>
 	</section>
+	<footer>this is the footer</footer>

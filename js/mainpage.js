@@ -27,7 +27,7 @@ function ready() {
 	function purchaseClick(event) {
 		if (!emptyCart) {
 			alert('PURCHASE REGISTERED');
-			createCookie();
+			//createCookie();
 
 		}
 
@@ -47,13 +47,12 @@ function cookieSeen() {
 }
 
 
-
-function getCookie() {
+/********   Throws json-errors that I have not gotten sorted out yet */
+/*function getCookie() {
 	let cartCookie = document.cookie.split("=");
 
 	let cartObject = JSON.parse(cartCookie[1]);
 	console.log(cartCookie);
-	alert(cartCookie.nr);
 
 }
 
@@ -65,13 +64,16 @@ function createCookie(shopObject) {
 	date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 	document.cookie = "shopCookie=" + jsonCookie;
 
-}
+}*/
 
 /**** handles clicks on the shopping cart items and calls on the required function */
 function clickEvent(e) {
 	if (event.target.classList.contains('buyQuantity')) {
-
-		itemTotals();
+		if (document.getElementsByClassName('buyQuantity')[0].value > 0) {
+			itemTotals();
+		} else {
+			document.getElementsByClassName('buyQuantity')[0].value == 1;
+		}
 	} else if (event.target.classList.contains('destroyerOfTickets')) {
 		let destroy = event.target;
 		destroy.parentElement.parentElement.remove();
@@ -87,6 +89,9 @@ function itemTotals() {
 	for (let i = 0; i < singleCartItem.length; i++) {
 		let specificItemCost = singleCartItem[i].getElementsByClassName('ticketPrice')[0];
 		let specificItemAmount = singleCartItem[i].getElementsByClassName('buyQuantity')[0];
+		if (specificItemAmount < 1) {
+			specificItemAmount.value = 1;
+		}
 		let specificEventName = singleCartItem[i].getElementsByClassName('ticketName')[0].innerText;
 		tempTotal = parseInt(specificItemAmount.value) * parseFloat(specificItemCost.innerText);
 		tempItems = parseInt(specificItemAmount.value);
@@ -98,8 +103,8 @@ function itemTotals() {
 		totalItem += tempItems;
 
 	};
-	createCookie();   //shopObject
-	getCookie()
+	//createCookie();   //shopObject
+	/*getCookie()            -----Another source of json troubles  */
 	document.getElementsByClassName('totalItems')[0].innerText = totalItem;
 	document.getElementsByClassName('totalCost')[0].innerText = totalCost;
 	if (totalItem > 0) {
@@ -123,6 +128,7 @@ function addItem(event) {
 	let image = shopItem.getElementsByClassName('eventImg')[0].src;
 	newCartItem(title, price, image);
 }
+
 function newCartItem(title, price, image) {
 	//let cookie = getCookie;
 	let cartRow = document.createElement('div');
@@ -139,7 +145,7 @@ function newCartItem(title, price, image) {
 	<img class="ticketImg" src="${image}">
 	<p class="ticketName">${title}</p>
 	<p class="ticketPrice">${price}</p>
-	<input class="buyQuantity" type="number" value="1">
+	<input class="buyQuantity" type="number" value="1" min=1 oninput="validity.valid||(value='');">
 	<button class="destroyerOfTickets">Remove ticket</button>           
 	</div>`
 	cartRow.innerHTML = shoppingCartContents

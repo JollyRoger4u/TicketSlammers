@@ -79,3 +79,4 @@ include_once 'header.php'
 			?>
 		</form>
 	</div>
+	<footer>this is the footer</footer>

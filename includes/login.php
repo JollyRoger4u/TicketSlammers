@@ -37,4 +37,5 @@ if (isset($_POST['loginBtn'])) {
 		</ul>
 	</form>
 </section>
+<footer>this is the footer</footer>
 <script src="../js/login.js"></script>

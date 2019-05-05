@@ -88,13 +88,13 @@ body{
 
  .eventViewer{
 	width: 1024px;
-	display: grid;
-	grid-template-columns: repeat(6, 1fr);
-	grid-template-rows: auto;
-	justify-items: center;
+	flex-flow: wrap;
 	margin:  40px auto;
 	background: rgba(0, 0, 0, 0.719);
 	color: white;
+	text-align: center;
+	justify-content: flex-end;
+
 	}
 .shopHeader{
 	background-color: purple;
@@ -107,62 +107,37 @@ body{
 	font-size: 64px;
 	}
 .eventImg{
-		height: 300px;
-		max-width: 400px;
-	object-fit: contain;
-	grid-column-start:1;
-	grid-column-end:2;
-	grid-row-start:2;
-	grid-row-end:3;
+	height: 300px;
+	max-width: 400px;
+	object-fit: cover;
 	padding: 10px;
+	float: left;
 	}
 .eventName{
-	grid-column-start:1;
-	grid-column-end: 4;
-	}
-.eventTime{
-	grid-column-start:5;
-	grid-column-end: 7;
-	}
-.eventDesc{
-	grid-column-start: 2;
-	grid-column-end: 6;
-	grid-row-start: 2;
-	grid-row-end: 5;
-	}
-.eventPriceLabel{
-	grid-column-start: 6;
-	grid-column-end: 7;
-	grid-row-start: 2;
 	width: 100%;
 	text-align: center;
-	}
+	color: red;
+}
+/*
+.eventTime{
+
+.eventDesc{
+
+.eventPriceLabel{
+
 .eventMaxTicketsLabel{
-	grid-column-start: 6;
-	grid-column-end: 7;
-	grid-row-start: 3;
-	}
+
 
 .eventCurrentTicketsLabel{
-	grid-column-start: 6;
-	grid-column-end: 7;
-	grid-row-start: 4;
-	}
+
 .eventPrice{
-	grid-column-start: 7;
-	grid-row-start: 2;
-	}
+
 .eventMaxTickets{
-	grid-column-start: 7;
-	grid-row-start: 3;
-	}
+
 .eventCurrentTickets{
-	grid-column-start: 7;
-	grid-row-start: 4;
-	}
+*/
 .BuyBtn{
-	grid-column-start: 7;
-	grid-row-start: 5;
+
 	padding: 10px;
 	margin: 10px;
 	}
@@ -234,6 +209,12 @@ footer{
 	height: auto;
 	margin: auto;
 	object-fit: contain;
+}
+/**********************************************************************************************************************
+ ****                                       footer                                                                  ****
+ **********************************************************************************************************************/
+footer{
+	height: 500px;
 }
  /**********************************************************************************************************************
  ****                                       Logout                                                                  ****

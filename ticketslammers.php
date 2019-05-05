@@ -33,7 +33,7 @@ $currentUserRole = 0;
 		echo '<div class="eventWrapper">';
 		echo '<div class="eventViewer">';
 		echo '<img class="eventImg" src="img/' . $tImg . '">';
-		echo '<h3 class="eventName">' . $tName . '</h3>';
+		echo '<h2 class="eventName">' . $tName . '</h2></br>';
 		echo '<h3 class="eventTime">2019-01-01</h3>';
 		echo '<p class="eventDesc">' . $tDsc . '</p>';
 		echo '<p class="eventPriceLabel">Price:</p>';

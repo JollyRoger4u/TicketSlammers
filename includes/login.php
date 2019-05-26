@@ -11,8 +11,8 @@ if (isset($_POST['loginBtn'])) {
 	$userPass = $_POST['password'];
 	$user = new User();
 	$loggedIn = $user->UserLogin($userMail, $userPass);
-	var_dump($loggedIn);
-	//echo '<meta http-equiv=Refresh content="0;url=login.php?reload=1">';
+
+	echo '<meta http-equiv=Refresh content="0;url=login.php?reload=1">';
 }
 
 

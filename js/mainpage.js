@@ -21,16 +21,9 @@ let shopCookie = {
 		{ 'eventID': '', "tickets": '', "title": "", "image": "", "price": "" }
 	]
 }
-/*let a = 5;
-let b = 22;
-shopCookie.events.push({ "eventID": "2", "tickets": 555 });
-shopCookie.events.push({ "eventID": a, "tickets": b });
-console.log(shopCookie);
-shopCookie = null;
-console.log(shopCookie);
-*/
+
 function ready() {
-	//openUserTimes(3);
+
 	let cookieHandler = new CookieHandler;
 	//Checks to see if the user have a cookie present,
 	//otherwise shows "this site uses cookies" disclaimer
@@ -62,49 +55,38 @@ function ready() {
 	// 		Listens for clicks on the main purchase button
 	let purchase = document.getElementsByClassName('buyBtnFinal')[0];
 	purchase.addEventListener('click', purchaseClick);
+
 	function purchaseClick() {
 		if (!emptyCart) {
 			let currentUser = cookieHandler.readCookie("TSUser");
-			let messageString = " You have purchased: " + "\r\n";
-			for (let i = 0; i < dataStorage.events.length; i++) {
-				messageString = messageString + "a total of " + dataStorage.events[i].tickets + " tickets for the event: " + dataStorage.events[i].title + "\r\n";
-				tempEvent = dataStorage.events[i].eventID;
-				tempAmount = dataStorage.events[i].tickets;
+			if (currentUser > 0 && currentUser == !null) {
+				let messageString = " You have purchased: " + "\r\n";
+				for (let i = 0; i < dataStorage.events.length; i++) {
+					messageString = messageString + "a total of " + dataStorage.events[i].tickets + " tickets for the event: " + dataStorage.events[i].title + "\r\n";
+					tempEvent = dataStorage.events[i].eventID;
+					tempAmount = dataStorage.events[i].tickets;
 
-				$.ajax({
-					type: "POST",
-					url: 'includes/test.php',
-					data: { eventID: tempEvent, amount: tempAmount, userID: currentUser },
-					success: function (data) {
-						console.log(data);
-					}
-				});
+					$.ajax({
+						type: "POST",
+						url: 'includes/test.php',
+						data: { eventID: tempEvent, amount: tempAmount, userID: currentUser },
+						success: function (data) {
+							console.log(data);
+						}
+					});
 
+				}
+				messageString = messageString + "for a total cost of: " + totalCost + "\r\n" + "Thank you very much and welcome back!";
+				alert(messageString);
+			} else {
+				alert("please log in to complete purchase, your cart will be saved")
 			}
-			messageString = messageString + "for a total cost of: " + totalCost + "\r\n" + "Thank you very much and welcome back!";
-			alert(messageString);
+
 		} else {
 			alert('there was a problem with your purchase, is the shopcart empty?')
 		}
 
 	}
-
-	/*function ticketCreator(eventID, amount, userID) {
-		$.post(
-			"includes/test.php",
-			{ event: eventID },
-			{ nr: amount },
-			{ ID: userID },
-			function (response) {
-				alert(response);
-				//var myvariable = response.userID;
-				//var times = response.firstName;
-				//console.log('Retreived data: ', myvariable, times);
-			}, 'json'
-		);
-	}*/
-
-
 
 	// handles clicks on the shopping cart items and calls on the required function
 	function clickEvent(e) {

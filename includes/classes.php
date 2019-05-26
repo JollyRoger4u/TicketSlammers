@@ -1,11 +1,5 @@
 <?php
 
-function test($a, $b)
-{
-	echo ($a + $b);
-}
-
-
 class DatabaseConnect
 {
 	private  $server = "mysql:host=localhost;dbname=ticketslammers";
@@ -43,10 +37,27 @@ class TicketHandler     //Handles all calls that has to do with tickets and even
 
 	public function getAllEvents()
 	{
-		$stmt = $this->db->prepare("select * FROM events");
+		$stmt = $this->db->prepare("SELECT * FROM events");
 		$stmt->execute();
 		$row = $stmt->fetchAll();
 		return $row;
+	}
+	public function eventIdentifier($id)
+	{
+
+		$stmt = $this->db->prepare("SELECT * FROM events WHERE eventID=?");
+		$stmt->bindParam(1, $id);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		return $result;
+	}
+	public function allOwnedTickets($user)
+	{
+		$stmt = $this->db->prepare("SELECT * FROM tickets WHERE userID=?");
+		$stmt->bindParam(1, $user);
+		$stmt->execute();
+		$data = $stmt->fetchAll();
+		return $data;
 	}
 
 	public function writeEvent(
@@ -94,13 +105,15 @@ class TicketHandler     //Handles all calls that has to do with tickets and even
 				$stmt->execute([
 					'eventID' => $eventID,
 					'tickSerial' => $tickSerial,
-					'tickHash' => $tickHash
+					'tickHash' => $tickHash,
+					'userID' => $userID
 				]);
 			} catch (Exception $e) {
 				echo 'Exception -> ';
 				var_dump($e->getMessage());
 			}
 		}
+		return true;
 	}
 
 	public function writeTicket($eID)
@@ -134,10 +147,10 @@ class TicketHandler     //Handles all calls that has to do with tickets and even
 			if ($result) {
 				switch ($result['used']) {
 					case 0:
-						echo "Ticket is not used";
+						echo "Ticket is not used and is a valid ticket";
 						break;
 					case 1:
-						echo "Ticket is used";
+						echo "Ticket is used and is a valid ticket";
 						break;
 					default:
 						echo "Something went wrong, please check ticket serial number";
@@ -179,11 +192,11 @@ class CookieHandler
 
 		setcookie($this->userCookieName, $userID, time() + (24 * 60 * 60 * 1000), '/');
 	}
-	public function checkCookie($cookieHash)
+	public function checkCookie($userID)
 	{
-		$hashCompare = "SELECT * FROM users WHERE cookieHash=?";
-		$stmt = $this->db->prepare($hashCompare);
-		$stmt->bindParam(1, $cookieHash);
+		$checkUser = "SELECT * FROM users WHERE userID=?";
+		$stmt = $this->db->prepare($checkUser);
+		$stmt->bindParam(1, $userID);
 		$stmt->execute();
 		$result = $stmt->fetch();
 		$_SESSION = $result;
@@ -260,7 +273,6 @@ class User              //Handles all Database interaction with Users
 	public function newUser($usermail, $userpass, $userFName, $userLName)
 	{
 		$userm = $usermail;
-		$userp = $userpass;
 		$userHash = password_hash($userpass, PASSWORD_DEFAULT);
 		$userF = $userFName;
 		$userL = $userLName;

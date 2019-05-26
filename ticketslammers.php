@@ -23,6 +23,7 @@ $currentUserRole = 0;
 	<?php
 	$eventPopulate = new TicketHandler;
 	$ticketObject = $eventPopulate->getAllEvents();
+	
 	foreach ($ticketObject as $data) {
 		$tID = $data['eventID'];
 		$tName = $data['eventName'];

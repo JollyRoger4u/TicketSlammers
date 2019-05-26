@@ -24,15 +24,15 @@ if (!isset($_COOKIE['cookiesAccepted'])) {
 	</section>
 <?php
 } else if (isset($_COOKIE['TSUser'])) {
-	$cookieHash = $_COOKIE['TSUser'];
-	$cookie->checkCookie($cookieHash);
+	$cookieUser = $_COOKIE['TSUser'];
+	$cookie->checkCookie($cookieUser);
 	$currentUserRole = $_SESSION['userRole'];
 } ?>
 
 
 
 <header>
-	<!--<img class="headerImg" src="img/header.jpg">-->
+	<img class="headerImg" src="http://localhost/ticketslammers/img/header.jpg">
 	<ul class="menuClass logInMenu">
 		<li><a href="/ticketslammers/ticketslammers.php">HOME</a> </li>
 		<?php
@@ -44,7 +44,7 @@ if (!isset($_COOKIE['cookiesAccepted'])) {
 		<?php if (isset($_SESSION['userRole'])) { ?>
 			<li><a href="/ticketslammers/includes/logout.php">Logout</a></li>
 			<li><a href="/ticketslammers/includes/profile.php">profile</a></li>
-			<li><a href="/ticketslammers/includes/ownedTickets.php">my tickets</a></li>
+			<li><a href="/ticketslammers/includes/myTickets.php">my tickets</a></li>
 			<?php if ($_SESSION['userRole'] == "Admin") { ?>
 				<li><a href="/ticketslammers/includes/admin.php">Welcome Admin</a></li>
 			<?php } ?>

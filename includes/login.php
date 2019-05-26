@@ -7,14 +7,14 @@
 require_once 'includes.php';
 
 if (isset($_POST['loginBtn'])) {
-	$userName = $_POST['userName'];
+	$userMail = $_POST['email'];
 	$userPass = $_POST['password'];
 	$user = new User();
-	$loggedIn = $user->UserLogin($userName, $userPass);
-	if ($loggedIn == false) {
-		echo "<h1>LOGGED IN, GOOD BOY!</h1>";
-	}
+	$loggedIn = $user->UserLogin($userMail, $userPass);
+	var_dump($loggedIn);
+	//echo '<meta http-equiv=Refresh content="0;url=login.php?reload=1">';
 }
+
 
 ?>
 
@@ -24,12 +24,12 @@ if (isset($_POST['loginBtn'])) {
 		<!--action="login.php">-->
 		<ul class="wrapper">
 			<li class="form-row">
-				<label for="userName">Username:</label>
-				<input type="text" id="userName" name="userName">
+				<label for="email">email:</label>
+				<input type="text" id="email" name="email" placeholder="email@temp.se">
 			</li>
 			<li class="form-row">
 				<label for="password">Password:</label>
-				<input type="password" id="password" name="password">
+				<input type="password" id="password" name="password" placeholder="password">
 			</li>
 			<li class="form-row">
 				<button type="submit" name="loginBtn">Submit</button>

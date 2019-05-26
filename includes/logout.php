@@ -18,7 +18,10 @@ require_once 'includes.php';
 session_destroy();
 $cookie = new CookieHandler();
 $cookie->eatCookie();
-
+if (!isset($_GET['reload'])) {
+	echo '<meta http-equiv=Refresh content="0;url=logout.php?reload=1">';
+}
 
 ?>
+
 <footer>this is the footer</footer>

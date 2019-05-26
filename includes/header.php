@@ -49,6 +49,10 @@ if (!isset($_COOKIE['cookiesAccepted'])) {
 				<li><a href="/ticketslammers/includes/admin.php">Welcome Admin</a></li>
 			<?php } ?>
 		<?php } ?>
+		<?php if (isset($_SESSION['userRole'])) { ?>
+			<li class="loggedIn">logged in as: <?php echo $_SESSION['firstName']; ?></li><?php } ?>
+		<?php if (!isset($_SESSION['userRole'])) { ?>
+			<li class="loggedIn">not logged in</li><?php } ?>
 	</ul>
 	<div class="headerText">
 		<h1>Welcome to Ticketslammers!</h1>

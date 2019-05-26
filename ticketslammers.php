@@ -8,7 +8,6 @@
 $path = $_SERVER['DOCUMENT_ROOT'];
 $path .= "/ticketslammers/includes/includes.php";
 include_once($path);
-
 $currentUserRole = 0;
 ?>
 
@@ -30,8 +29,10 @@ $currentUserRole = 0;
 		$tDsc = $data['eventDsc'];
 		$tPrice = $data['ticketPrice'];
 		$tImg = $data['eventImg'];
+
 		echo '<div class="eventWrapper">';
 		echo '<div class="eventViewer">';
+		echo '<h1 class="eventID" style="display: none">' . $tID . '</h1>';
 		echo '<img class="eventImg" src="img/' . $tImg . '">';
 		echo '<h2 class="eventName">' . $tName . '</h2></br>';
 		echo '<h3 class="eventTime">2019-01-01</h3>';
@@ -95,13 +96,15 @@ $currentUserRole = 0;
 		<p class="totalItems">0</p>
 		<p>total cost: </p>
 		<p class="totalCost">0</p>
-		<button class="buyBtnFinal">Purchase</button>
+		<button class="buyBtnFinal" method="post">Purchase</button>
 	</div>
 
 </section>
 
 <script src="js/mainpage.js"></script>
-<footer>this is the footer</footer>
+<script src="js/cookies.js"></script>
+<footer class="shopFooter">this is the footer</footer>
+
 </body>
 
 </html>

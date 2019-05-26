@@ -9,11 +9,19 @@
     text-decoration: none;
 }
 .menuClass li{
-    list-style: none;
+	list-style: none;
+	display: block;
 }
 .menuClass{
     padding-inline-start: 0px;
-    display: flex;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.loggedIn{
+	width: 90%;
+	text-align: right;
+	
 }
 
 /**********************************************************************************************************************
@@ -55,7 +63,7 @@
 	background-color: white;
 	color: black;
 	font-size: 18px;
-	padding: 7px;
+	padding: 12px;
 	border-radius:  50px 0 50px 0;
 }
 

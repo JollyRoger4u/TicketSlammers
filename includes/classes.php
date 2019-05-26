@@ -1,5 +1,11 @@
 <?php
 
+function test($a, $b)
+{
+	echo ($a + $b);
+}
+
+
 class DatabaseConnect
 {
 	private  $server = "mysql:host=localhost;dbname=ticketslammers";
@@ -75,6 +81,28 @@ class TicketHandler     //Handles all calls that has to do with tickets and even
 		}
 	}
 
+	public function boughtTicket($eventID, $nr, $userID)
+	{
+		$i = 0;
+		while ($i <= $nr) {
+			$tickSerial = uniqid();
+			$tickHash = password_hash($tickSerial, PASSWORD_DEFAULT);
+			try {
+				$sql = "INSERT INTO tickets (eventID, tickSerial, tickHash, userID)
+		VALUES (:eventID, :tickSerial, :tickHash, :userID)";
+				$stmt = $this->db->prepare($sql);
+				$stmt->execute([
+					'eventID' => $eventID,
+					'tickSerial' => $tickSerial,
+					'tickHash' => $tickHash
+				]);
+			} catch (Exception $e) {
+				echo 'Exception -> ';
+				var_dump($e->getMessage());
+			}
+		}
+	}
+
 	public function writeTicket($eID)
 	{
 		echo ('creating ticket');
@@ -90,6 +118,34 @@ class TicketHandler     //Handles all calls that has to do with tickets and even
 				'tickSerial' => $tickSerial,
 				'tickHash' => $tickHash
 			]);
+		} catch (Exception $e) {
+			echo 'Exception -> ';
+			var_dump($e->getMessage());
+		}
+	}
+	public function checkTicket($serial)
+	{
+		try {
+			$serialTest = "SELECT * FROM tickets WHERE tickSerial=?";
+			$stmt = $this->db->prepare($serialTest);
+			$stmt->bindParam(1, $serial);
+			$stmt->execute();
+			$result = $stmt->fetch();
+			if ($result) {
+				switch ($result['used']) {
+					case 0:
+						echo "Ticket is not used";
+						break;
+					case 1:
+						echo "Ticket is used";
+						break;
+					default:
+						echo "Something went wrong, please check ticket serial number";
+						break;
+				}
+			} else {
+				echo "Something went wrong, please check ticket serial number";
+			}
 		} catch (Exception $e) {
 			echo 'Exception -> ';
 			var_dump($e->getMessage());
@@ -121,8 +177,7 @@ class CookieHandler
 		}
 
 
-		setcookie($this->userCookieName, $hashedID, time() + (24 * 60 * 60 * 1000), '/');
-
+		setcookie($this->userCookieName, $userID, time() + (24 * 60 * 60 * 1000), '/');
 	}
 	public function checkCookie($cookieHash)
 	{
@@ -154,32 +209,32 @@ class User              //Handles all Database interaction with Users
 		$this->db = $this->db->openConnection();
 	}
 
-	public function UserLogIn($userName, $userPass)
+	public function UserLogIn($userMail, $userPass)
 	{
-		if (!empty($userName) && !empty($userPass)) {
-			$stmt = $this->db->prepare("select * from users where firstName=? and userPassword=?");
-			$stmt->bindParam(1, $userName);
-			$stmt->bindParam(2, $userPass);
+		if (!empty($userMail) && !empty($userPass)) {
+			$stmt = $this->db->prepare("select * from users where email=?");
+			$stmt->bindParam(1, $userMail);
 			$stmt->execute();
 			$result = $stmt->fetch();
 
-			if ($result['firstName'] == $userName && $result['userPassword'] == $userPass) {
-				echo '<p style="color: white; font-size: 40px; text-align: center;"> -------> ACCESS GRANTED <------- </p>';
-				echo "welcome" . $result['firstName'];
-				$loginCookie = new CookieHandler();
-				$loginCookie->bakeCookie($result);
-				return true;
+			if ($result['email'] === $userMail) {
+				$hash = $result['userHash'];
+				if (password_verify($userPass, $hash)) {
+					echo '<p style="color: white; font-size: 40px; text-align: center;"> -------> ACCESS GRANTED <------- </p>';
+					echo "welcome" . $result['firstName'];
+					$loginCookie = new CookieHandler();
+					$loginCookie->bakeCookie($result);
+					return true;
+				} else {
+					echo '<p style="color: white; font-size: 40px; text-align: center;">Incorrect username or password</p>';
+					return false;
+				}
 			} else {
-				echo '<p style="color: white; font-size: 40px; text-align: center;">Incorrect username or password</p>';
-				echo '<p style="color: white; font-size: 40px; text-align: center;">' . $userName . " " . $userPass;
+				echo '<p style="color: white; font-size: 40px; text-align: center;">enter username and password plixx</p>';
 				return false;
 			}
-		} else {
-			echo '<p style="color: white; font-size: 40px; text-align: center;">enter username and password plixx</p>';
-			return false;
 		}
 	}
-
 	public function logout()
 	{
 		session_destroy();
@@ -210,16 +265,14 @@ class User              //Handles all Database interaction with Users
 		$userF = $userFName;
 		$userL = $userLName;
 		try {
-			$sql = " INSERT INTO users(email, firstName, lastName, userPassword, userHash)
-			V ALUES(: email,:firs tName,:las tName,:userPas sword,:u serHash )";
+			$sql = " INSERT INTO users(email, firstName, lastName, userHash)
+			VALUES(: email,:firstName,:lastName,:userHash )";
 			$stmt = $this->db->prepare($sql);
-			$stmt->execute([
-				'email' => $userm,
-				'firstName' => $userF,
-				'lastName' => $userL,
-				'userPassword' => $userp,
-				'userHash' => $userHash
-			]);
+			$stmt->bindParam(':email', $userm, PDO::PARAM_STR);
+			$stmt->bindParam(':firstName', $userF, PDO::PARAM_STR);
+			$stmt->bindParam(':lastName', $userL, PDO::PARAM_STR);
+			$stmt->bindParam(':userHash', $userHash, PDO::PARAM_STR);
+			$stmt->execute();
 		} catch (Exception $e) {
 			echo 'Exception -> ';
 			var_dump($e->getMessage());

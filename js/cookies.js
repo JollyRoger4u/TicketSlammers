@@ -3,18 +3,7 @@
 
 class CookieHandler {
 
-	/*	constructor(cookieName) {
-	
-			this.cookieExists = this.cookieCheck(cookieName);
-			if (this.cookieExists == true) {
-				console.log("cartCookie detected, populating cart");
-				this.popData.events = readCookie(cookieName);
-				for (let i = 0; i < this.popData.length; i++) {
-					alert("whoop")
-				}else (alert("where cookie"))
-		}
-}*/
-	cookiesAccepted() {
+	cookiesAccepted() {         //Creates the button to accept cookies and sets a cookie to remember it has been seen
 		let buttonExists = document.getElementById('okToCookiesBtn');
 		if (buttonExists != null) {
 			let getRidOfWarning = document.getElementById('okToCookiesBtn');
@@ -25,7 +14,7 @@ class CookieHandler {
 			}
 		}
 	}
-	cookieCheck(cookieName) {
+	cookieCheck(cookieName) {    //Checks that the cookiename sent exists
 		if (document.cookie.indexOf(cookieName + "=") >= 0) {
 			console.log("cookie detected");
 			return true;
@@ -37,25 +26,37 @@ class CookieHandler {
 
 	}
 
-	readCookie(cookieName) {
+	readCookie(cookieName) {	//Fetches info from the cookie named
 		let cstring = RegExp("" + cookieName + "[^;]+").exec(document.cookie);
 		let tempData = (decodeURIComponent(!!cstring ? cstring.toString().replace(/^[^=]+./, "") : ""));
 		return tempData;
 	}
 
-	
 
-	bakeCartCookie(id, nr, title, img, cost) {
-		let tempData = { "eventID": id, "tickets": nr, "title": title, "image": img, "price": cost };
-		dataStorage.events.push(tempData);
 
-	}
-	serveCookie(data) {      //TODO REMOVE COOKIE IF EMPTY!!
-		let stringdata = JSON.stringify(data);
+	bakeCartCookie() {  //updates dataStorage with information from shopping cart and keeps track of totals
+		let tempTotal = 0;
+		let tempItems = 0;
+		totalCost = 0;
+		totalItem = 0;
+		let stringdata = JSON.stringify(dataStorage);
 		document.cookie = shopCookieName + "=" + stringdata + ";" + "expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/;";
+		console.log(dataStorage);
+		for (let j = 0; j < dataStorage.events.length; j++) {
+			tempTotal = dataStorage.events[j].tickets * dataStorage.events[j].price;
+			tempItems = dataStorage.events[j].tickets;
+			totalCost = tempTotal + totalCost;
+			totalItem = tempItems + totalItem;
+		}
+		document.getElementsByClassName('totalItems')[0].innerText = totalItem;
+		document.getElementsByClassName('totalCost')[0].innerText = totalCost;
+		if (totalItem > 0) {
+			emptyCart = false;
+		}
 	}
 
-
-	//cookieData = readCookie(cookieName);
-	//console.log(JSON.parse(cookieData));
+	deleteCookie(name) {
+		console.log("eating cookie");
+		document.cookie = shopCookieName + "=" + "" + ";" + "expires=Thu, 01 Jan 1950 00:00:00 UTC; path=/;";
+	}
 }

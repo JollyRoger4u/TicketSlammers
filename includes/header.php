@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- General Header for entire site -->
+
+
 <head>
 	<link rel="stylesheet" href="/ticketslammers/css/normalize.css">
 	<link rel="stylesheet" href="/ticketslammers/css/header.css">
@@ -12,7 +15,7 @@ session_start();
 
 $currentUserRole = 0;
 $cookie = new CookieHandler();
-if (!isset($_COOKIE['cookiesAccepted'])) {
+if (!isset($_COOKIE['cookiesAccepted'])) {       //Shows text if cookie for accepted cookies are not avaible
 	?>
 	<section id="cookieWarning">
 		<h3>This site uses cookies</h3>
@@ -32,6 +35,7 @@ if (!isset($_COOKIE['cookiesAccepted'])) {
 
 
 <header>
+	<!-- Responsible for navigation and allowing user with correct role access to certain options -->
 	<img class="headerImg" src="http://localhost/ticketslammers/img/header.jpg">
 	<ul class="menuClass logInMenu">
 		<li><a href="/ticketslammers/ticketslammers.php">HOME</a> </li>

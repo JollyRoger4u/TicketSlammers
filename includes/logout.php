@@ -5,6 +5,7 @@
 <?php
 require_once 'includes.php';
 ?>
+<!-- logs user out and send a request to clear user cookie-->
 <section id="logoutSection">
 	<h2>
 		You have been successfully logged out, welcome back another time!
@@ -24,4 +25,4 @@ if (!isset($_GET['reload'])) {
 
 ?>
 
-<footer>this is the footer</footer>
+<footer></footer>

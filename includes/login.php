@@ -5,7 +5,7 @@
 </head>
 <?php
 require_once 'includes.php';
-
+//Handles loginrequests
 if (isset($_POST['loginBtn'])) {
 	$userMail = $_POST['email'];
 	$userPass = $_POST['password'];
@@ -18,10 +18,9 @@ if (isset($_POST['loginBtn'])) {
 
 ?>
 
-
+<!-- writes login UI -->
 <section id="logInSection">
 	<form method="post">
-		<!--action="login.php">-->
 		<ul class="wrapper">
 			<li class="form-row">
 				<label for="email">email:</label>
@@ -37,5 +36,5 @@ if (isset($_POST['loginBtn'])) {
 		</ul>
 	</form>
 </section>
-<footer>this is the footer</footer>
+<footer></footer>
 <script src="../js/login.js"></script>

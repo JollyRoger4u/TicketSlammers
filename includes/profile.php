@@ -14,7 +14,7 @@
 
 
 	</section>
-
+	<!-- Registers new users and filters input -->
 	<section id="logInSection">
 		<form method="post" action="">
 			<div class="registerHeader">
@@ -22,38 +22,34 @@
 			<ul class="wrapper">
 				<h2>Welcome <?php echo $uFN ?><h2>
 						<li class="form-row">
-
-							<label for="emailReg">Current email: <?php echo $uEmail ?> </label>
-							<input type="text" id="emailReg" name="emailReg" placeholder="example@example.se">
-						</li>
-						<li class="form-row">
 							<label for="passwordReg">Change password</label>
-							<input type="text" id="passwordReg" name="passwordReg">
+							<input type="text" id="passwordReg" name="passwordReg" required>
 						</li>
 						<li class="form-row">
 							<label for="passwordReg2">Repeat Password: </label>
-							<input type="text" id="passwordReg2" name="passwordReg2">
+							<input type="text" id="passwordReg2" name="passwordReg2" required>
 						</li>
 						<li class="form-row">
 							<label for="firstNameReg">First name: <?php echo $uFN ?> </label>
-							<input type="text" id="firstNameReg" name="firstNameReg">
+							<input type="text" id="firstNameReg" name="firstNameReg" required>
 						</li>
 						<li class="form-row">
 							<label for="lastNameReg">Last name: <?php echo $uLN ?> </label>
-							<input type="text" id="lastNameReg" name="lastNameReg">
+							<input type="text" id="lastNameReg" name="lastNameReg" required>
 						</li>
 						<li class="form-row">
 							<button type="submit" name="changeData">change settings</button>
 						</li>
 
 						<?php
+						//checks if user is trying to use diffent passwords and trims input
 						try {
 							if (isset($_POST['changeData'])) {
-								$emailReg = $_POST['emailReg'];
+								$emailReg = trim(htmlspecialchars($_POST['emailReg']));
 								$passwordReg = $_POST['passwordReg'];
 								$passwordReg2 = $_POST['passwordReg2'];
-								$firstNameReg = $_POST['firstNameReg'];
-								$lastNameReg = $_POST['lastNameReg'];
+								$firstNameReg = trim(htmlspecialchars($_POST['firstNameReg']));
+								$lastNameReg = trim(htmlspecialchars($_POST['lastNameReg']));
 								if ($passwordReg == $passwordReg2) {
 									$userReg = new User;
 									$userReg->editUser($uID, $emailReg, $passwordReg, $firstNameReg, $lastNameReg);
@@ -69,4 +65,4 @@
 						?>
 		</form>
 	</section>
-	<footer>this is the footer</footer>
+	<footer></footer>

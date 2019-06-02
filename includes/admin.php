@@ -10,9 +10,9 @@ include_once 'header.php'
 	<h2 class="shopHeader">Currently available events</h2>
 	<?php
 	$handler = new TicketHandler();
-	$eventList = $handler->getAllEvents();
+	$eventList = $handler->getAllEvents();  //Fetches all current events
 
-	foreach ($eventList as $data) {
+	foreach ($eventList as $data) {   		//Writes collected data to screen
 		$tID = $data['eventID'];
 		$tName = $data['eventName'];
 		$tDsc = $data['eventDsc'];
@@ -32,8 +32,7 @@ include_once 'header.php'
 		echo '<button type="POST" id="createTicket" name="createTicket">Create Ticket</button></br>';
 		echo '</section>';
 	}
-	if (isset($_POST['createTicket'])) {
-		alert('woot');
+	if (isset($_POST['createTicket'])) {   //Attempts to create a new ticket for the current event
 		$eventID = $_POST['id'];
 		$wrTicket = new TicketHandler;
 		$wrTicket->writeTicket($eventID);
@@ -44,6 +43,7 @@ include_once 'header.php'
 
 	?>
 	<div class="form-style-2">
+		<!---Form for creating new event in database--->
 		<h2>Create a new Event</h2>
 		<form class="form-style-2" name="addNewEventForm" method="post" id="addEventForm">
 			<label class=".form-style-2 label" for="eventName">Name of event:</label>
@@ -70,6 +70,7 @@ include_once 'header.php'
 					$eventMaxTickets = trim(htmlspecialchars($_POST['eventMaxTickets']));
 					$wrTicket = new TicketHandler;
 					$wrTicket->writeEvent($eventName, $eventDate, $ticketPrice, $newEventImg, $eventDescription, $eventMaxTickets);
+					echo '<meta http-equiv=Refresh content="0;url=admin.php?reload=1">';
 				}
 			} catch (Exception $e) {
 				echo 'Exception -> ';
@@ -77,6 +78,7 @@ include_once 'header.php'
 				var_dump($e->getMessage());
 			}
 			?>
+
 		</form>
 	</div>
 	<footer>this is the footer</footer>

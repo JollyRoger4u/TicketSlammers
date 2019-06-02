@@ -23,10 +23,6 @@
 	text-align: right;
 	
 }
-#ticketSection{
-	background-color: lightgray;
-	text-align: center;
-}
 /**********************************************************************************************************************
  ****                                           Header                                                             ****
  **********************************************************************************************************************/
@@ -43,9 +39,10 @@
 .headerText{
 		align-self: center;
 		text-align: center;
+		margin-left: 20%;
     }
 .headerImg{
-	width: 300px;
+	width: 20%;
 	height: auto;
 	object-fit: cover;
 	position: absolute;
@@ -72,7 +69,7 @@
 
 .logInMenu a{
     display: block;
-padding: 5px;
+	padding: 5px;
 }
 
  /**********************************************************************************************************************
@@ -95,62 +92,75 @@ header .mainNav li:first-child{
  **********************************************************************************************************************/
 body{
 	background: darkmagenta;
+	color: white;
 }
-
- .eventViewer{
-	width: 1024px;
-	flex-flow: wrap;
-	margin:  40px auto;
-	background: rgba(0, 0, 0, 0.719);
-	color: white;
-	text-align: center;
-	justify-content: flex-end;
-
-	}
 .shopHeader{
-	background-color: purple;
-	color: white;
-	width: 100%;
-	height: 75px;
-	line-height: 75px;
+	font-family: "metal mania";
 	text-align: center;
-	font-family: "Metal Mania";
-	font-size: 64px;
-	}
+	font-size: 48px;
+	color: white;
+}
+.eventWrapper{
+	width: 1024px;
+	margin: auto;
+	background-color:purple;
+	
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+  }
+ .eventViewer{
+	 margin-bottom: 10px;
+	 position: relative;
+  }
+  .col {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	flex: 1;
+  }
+  .col-1{
+	  background-color: black;
+  }
+  .col-2{
+	  text-align: center;
+	  background-color: black;
+  }
+
 .eventImg{
-	height: 300px;
-	max-width: 400px;
-	object-fit: cover;
-	padding: 10px;
-	float: left;
+	width: 600px;
+	height: auto;
+	max-height: 400px;
+	object-fit: contain;
 	}
 .eventName{
-	width: 100%;
-	text-align: center;
+	font-size: 32px;
 	color: red;
+	font-family: "metal mania";
+
 }
-/*
-.eventTime{
+.eventText{
+	margin: 2px 5px;
+	color: white;
+	padding: 0px 10px;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+  }
 
-.eventDesc{
-
-.eventPriceLabel{
-
-.eventMaxTicketsLabel{
-
-
-.eventCurrentTicketsLabel{
-
-.eventPrice{
-
-.eventMaxTickets{
-
-.eventCurrentTickets{
-*/
-.BuyBtn{
-
+.buyBtn{
+	display: block;
 	padding: 10px;
 	margin: 10px;
+	position: absolute;
+	right:    0;
+	bottom:   0;
 	}
  /**********************************************************************************************************************
  ****                                       shopping cart                                                           ****
@@ -197,7 +207,7 @@ body{
 }
 
 footer{
-	height: 500px;
+	height: 50px;
 }
 .destroyerOfTickets{
 	width: 100px;
@@ -246,7 +256,33 @@ footer{
 	margin: auto;
 	object-fit: contain;
 }
+/**********************************************************************************************************************
+ ****                                       mytickets                                                             ****
+ **********************************************************************************************************************/
+#ticketSection{
+	background-color: black;
+	text-align: center;
+	margin: 0px 5px;
+}
 
+#ticketSection > p{
+	color: white;
+	padding: 0px;
+	margin: 0px;
+}
+.ticketTester{
+	margin: 20px;
+	padding: 20px;	
+}
+.ticketTester > form{
+	text-align: center;
+	color: white;
+	font-size: 20px;
+}
+.ticketTester > form > .testBtn{
+	font-size: 20px;
+	margin-top: 20px;
+}
  /**********************************************************************************************************************
  ****                                       Admin - Code (partly) Stolen from the internet                                   ****
  **********************************************************************************************************************/

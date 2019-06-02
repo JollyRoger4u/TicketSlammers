@@ -5,13 +5,16 @@ if (document.readyState == "loading") {
 	ready();
 
 }
+
+//Initializes variables needed by several functions
 let dataStorage = {
 	"events": [
 
 	]
 };
-let totalItem = 0;
+
 let totalCost = 0;
+let totalItem = 0;
 let uniqueCartItem = document.getElementsByClassName('selectedItemWrap');
 let shoppingCart = document.getElementById('shoppingCartWrap');
 let emptyCart = true;
@@ -28,6 +31,7 @@ function ready() {
 	//Checks to see if the user have a cookie present,
 	//otherwise shows "this site uses cookies" disclaimer
 	cookieHandler.cookiesAccepted();
+	let currentUser = cookieHandler.readCookie("TSUser");
 	cExists = cookieHandler.cookieCheck(shopCookieName);
 	if (cExists) {
 		let data = cookieHandler.readCookie(shopCookieName);
@@ -44,7 +48,7 @@ function ready() {
 	} else {
 		console.log("where cookie");
 	}
-
+	itemTotals();
 	//Listens for clicks on any of the add-to-cart buttons "buyBtns"
 	let buybuttons = document.getElementsByClassName('buyBtn');
 	for (let i = 0; i < buybuttons.length; i++) {
@@ -58,26 +62,32 @@ function ready() {
 
 	function purchaseClick() {
 		if (!emptyCart) {
-			let currentUser = cookieHandler.readCookie("TSUser");
-			if (currentUser > 0 && currentUser == !null) {
+			if (currentUser > 0) {
 				let messageString = " You have purchased: " + "\r\n";
 				for (let i = 0; i < dataStorage.events.length; i++) {
 					messageString = messageString + "a total of " + dataStorage.events[i].tickets + " tickets for the event: " + dataStorage.events[i].title + "\r\n";
 					tempEvent = dataStorage.events[i].eventID;
 					tempAmount = dataStorage.events[i].tickets;
 
+					//Sends ajax request to create tickets for the bought items
 					$.ajax({
 						type: "POST",
-						url: 'includes/test.php',
+						url: 'includes/boughtTicket.php',
 						data: { eventID: tempEvent, amount: tempAmount, userID: currentUser },
 						success: function (data) {
 							console.log(data);
 						}
+
 					});
 
 				}
 				messageString = messageString + "for a total cost of: " + totalCost + "\r\n" + "Thank you very much and welcome back!";
 				alert(messageString);
+
+				dataStorage = "";
+				shopCookie = "";
+				cookieHandler.deleteCookie(shopCookieName);
+				location.reload();
 			} else {
 				alert("please log in to complete purchase, your cart will be saved")
 			}
@@ -90,7 +100,6 @@ function ready() {
 
 	// handles clicks on the shopping cart items and calls on the required function
 	function clickEvent(e) {
-
 		if (event.target.classList.contains('buyQuantity')) {
 			let quantity = document.getElementsByClassName('buyQuantity')[0];
 			if (quantity.value > 0) {
@@ -103,16 +112,15 @@ function ready() {
 			let destroy = event.target;
 			destroy.parentElement.parentElement.remove();
 			itemTotals();
-			console.log(dataStorage)
-		}
 
-		else { console.log("not-a-button") }
+		}
 	}
 
+
+	//adds the shopping cart items together and produces a summary, then sends request to update shopping cart cookie
 	function itemTotals() {
 		dataStorage = {
 			"events": [
-
 			]
 		};
 
@@ -123,33 +131,30 @@ function ready() {
 			let itemID = parseInt(singleCartItem[i].getElementsByClassName('eventID')[0].innerText);
 			let itemTitle = singleCartItem[i].getElementsByClassName('ticketName')[0].innerText;
 			let itemImage = singleCartItem[i].getElementsByClassName('ticketImg')[0].src;
-			String(itemTitle);
-			String(itemImage);
 			if (itemAmount < 1) {
 				itemAmount.value = 1;
 			}
-			tempTotal = parseInt(itemAmount) * parseFloat(itemCost);
-			tempItems = parseInt(itemAmount);
-			totalCost += tempTotal;
-			totalItem += tempItems;
-			cookieHandler.bakeCartCookie(itemID, itemAmount, itemTitle, itemImage, itemCost);
-		};
-		cookieHandler.serveCookie(dataStorage);
-		document.getElementsByClassName('totalItems')[0].innerText = totalItem;
-		document.getElementsByClassName('totalCost')[0].innerText = totalCost;
-		if (totalItem > 0) {
-			emptyCart = false;
+			let tempData = { "eventID": itemID, "tickets": itemAmount, "title": itemTitle, "image": itemImage, "price": itemCost };
+			dataStorage.events.push(tempData);
+			for (var j = 0; j < dataStorage.events.length; j++) {
+				if (dataStorage.events[j].eventID == tempData.eventID) {
+					dataStorage.events[j].tickets = tempData.tickets;
+				}
+
+			}
 		}
 
-	}
 
+		cookieHandler.bakeCartCookie(dataStorage);
+	}
+	//adds eventlistener to the shopping cart items
 	function activateButtons() {
 		for (let i = 0; i < uniqueCartItem.length; i++) {
 			uniqueCartItem[i].addEventListener('click', clickEvent);
 		}
 	}
 
-	//     Grabs data from the event and gives it to "newCartItem" to make a shopping cart item
+	// Grabs data from the event and gives it to "newCartItem" to make a shopping cart item
 	function addItem(event) {
 		let button = event.target
 		let shopItem = button.parentElement.parentElement
@@ -157,10 +162,14 @@ function ready() {
 		let title = shopItem.getElementsByClassName('eventName')[0].innerText;
 		let price = shopItem.getElementsByClassName('eventPrice')[0].innerText;
 		let image = shopItem.getElementsByClassName('eventImg')[0].src;
-		newCartItem(eventID, title, price, image);
-
+		let soldOut = shopItem.getElementsByClassName('eventCurrentTickets')[0].innerText;
+		if (soldOut > 0) {
+			newCartItem(eventID, title, price, image);
+		} else {
+			alert("sorry, that concert is sold out!")
+		}
 	}
-
+	//creates the actual UI-item and sends a request to update to total items
 	function newCartItem(eventID, title, price, image, amount) {
 		let cartRow = document.createElement('div');
 		let doublechk = shoppingCart.getElementsByClassName('ticketName');
@@ -173,7 +182,7 @@ function ready() {
 		//  Creates the UI representation of the ticket in the cart with information from the addItems function
 
 		let shoppingCartContents = `<div class="selectedItemWrap">
-	<h1 class="eventID">${eventID}</h1>
+	<h1 class="eventID" style="display: none;">${eventID}</h1>
 	<img class="ticketImg" src="${image}">
 	<p class="ticketName">${title}</p>
 	<p class="ticketPrice">${price}</p>

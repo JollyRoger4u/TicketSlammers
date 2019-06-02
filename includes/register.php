@@ -8,7 +8,7 @@
 		<img src="../img/thanks.jpg">
 		<button onclick="window.location.href = '/ticketslammers/ticketslammers.php';">to store</button>
 	</section>
-
+	<!-- Lets user register to database for later login. -->
 	<section id="logInSection">
 		<form method="post" action="">
 			<div class="registerHeader">
@@ -44,6 +44,7 @@
 				</li>
 
 				<?php
+				// gathers data from input and trims it, also checks that both passwordfields are correct
 				try {
 					if (isset($_POST['registerBtn'])) {
 						$emailReg = $_POST['emailReg'];
@@ -81,4 +82,4 @@
 			?>
 		</form>
 	</section>
-	<footer>this is the footer</footer>
+	<footer></footer>

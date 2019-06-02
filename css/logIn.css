@@ -10,6 +10,7 @@
 }
 .wrapper {
   background-color: whitesmoke;
+  color: black;
   list-style-type: none;
   padding: 10px;
   border-radius: 3px;
